@@ -6,7 +6,7 @@
 struct PollTarget
 {
     std::string description;
-    std::string enabled;
+    bool enabled;
     std::string interface;
     std::string url;
     int interval_ms;

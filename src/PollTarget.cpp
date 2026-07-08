@@ -32,7 +32,7 @@ PollTarget createPollTarget(){
 
     target.interval_ms = readInt("Interval: ");
 
-    target.enabled = readString("Enabled[y/n]: ");
+    target.enabled = readYesNo("Enabled[y/n]: ");
 
     target.interface = readString("Interface: ");
 

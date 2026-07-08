@@ -4,13 +4,14 @@
 #include "Menu.h"
 #include <nlohmann/json.hpp>
 #include "jsonSerializer.h"
+#include "fileStorage.h"
 
 using json = nlohmann::json;
 
-std::vector<PollTarget> targets;
-json json_targets;
-
 int main(){
+
+    std::vector<PollTarget> targets;
+    json json_targets;
 
     {
         PollTarget target;
@@ -21,8 +22,6 @@ int main(){
         target.url = "http://192.168.0.1/awg/api/api.html";
         target.interval_ms = 1000;
 
-        json_targets["endpoints"].push_back(pollTargetToJson(target));
-
         targets.push_back(target);
 
         target.description = "mikrotik 3AP";
@@ -31,31 +30,16 @@ int main(){
         target.url = "http://192.168.0.1/awg/api/api.html";
         target.interval_ms = 900;
 
-        json_targets["endpoints"].push_back(pollTargetToJson(target));
-
         targets.push_back(target);
 
+    }
+
+    {
+        json_targets = pollEndpointsToConfig(targets);
         std::cout << json_targets.dump(4) << '\n';
     }
 
- /*   {
-        json j;
-
-        json endpoint;
-
-        endpoint["description"] = "mikrotik json";
-        endpoint["enabled"] = true;
-        endpoint["interface"] = "wg510";
-        endpoint["url"] = "http://www.wp.pl";
-        endpoint["interval_ms"] = 1000;
-
-        j["endpoints"].push_back(endpoint);
-
-        std::cout << j.dump(4) << '\n';
-
-    }*/
-
-    while(1){
+    while(true){
 
 
     int choice = showMenu();
@@ -72,18 +56,18 @@ int main(){
         removePollTarget(targets);
         break;
     case 4:
+        if(saveConfiguration("config.json", targets))
+            std::cout << "Configuration saved.";
+        else 
+            std::cout << "Configuration could not be saved.\n\n";
+        break;
+    case 5:
         return 0;
 
     default:
         break;
     }
 }
-
-const char* p = "ABC";
-
-std::cout << p << '\n';
-std::cout << *p << '\n';
-std::cout << &p << '\n';
 
     return 0;
 }

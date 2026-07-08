@@ -13,3 +13,14 @@ json pollTargetToJson(const PollTarget& target){
         return endpoint;
 
 }
+
+json pollEndpointsToConfig(const std::vector<PollTarget>& targets){
+
+        json json_endpoints;
+
+        for(const PollTarget& target:targets){
+                json_endpoints["endpoints"].push_back(pollTargetToJson(target));
+        }
+
+        return json_endpoints;
+}

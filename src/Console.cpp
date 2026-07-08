@@ -21,13 +21,34 @@ int readInt(const std::string& prompt){
         if(std::cin >> value){
             int test_char = std::cin.peek();
             if(test_char == '\n') return value;
-            else std::cout << "Poza liczbą wpisałeś coś innego.\n";
+            else std::cout << "Please enter a valid integer.\n";
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }else{
-            std::cout << "To nie jest wartość liczbowa.\n";
+            std::cout << "Not a number.\n";
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
     }
+}
+
+bool readYesNo(const std::string& prompt){
+
+    while(true){
+        std::cout << prompt;
+
+        char answer = 0;
+        
+        std::cin >> answer;
+
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        
+        if(answer == 'n' or answer == 'N')
+            return false;
+        else if (answer == 'y' || answer == 'Y')
+            return true;
+
+        std::cout << "Please enter y or n.\n";
+    }
+    
 }

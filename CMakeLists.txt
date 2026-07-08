@@ -10,6 +10,7 @@ add_executable(CollectorConfigEditor
     ./src/Menu.cpp
     ./src/PollTarget.cpp
     ./src/jsonSerializer.cpp
+    ./src/fileStorage.cpp
 )
 
 target_compile_options(CollectorConfigEditor PRIVATE

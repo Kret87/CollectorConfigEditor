@@ -8,7 +8,8 @@ int showMenu(){
     std::cout << "1. List entries\n";
     std::cout << "2. Add entry\n";
     std::cout << "3. Remove entry\n";
-    std::cout << "4. Exit\n\n";
+    std::cout << "4. Save to file\n";
+    std::cout << "5. Exit\n\n";
 
     int choice = 0;
 
