@@ -15,3 +15,5 @@ void showPollTarget(const PollTarget& target);
 void showTargetList(const std::vector<PollTarget>& targets);
 
 PollTarget createPollTarget();
+
+void removePollTarget(std::vector<PollTarget>& targets);

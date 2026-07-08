@@ -32,6 +32,9 @@ int main(){
     case 2:
         targets.push_back(createPollTarget());
         break;
+    case 3:
+        removePollTarget(targets);
+        break;
     case 4:
         return 0;
 
