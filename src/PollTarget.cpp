@@ -57,7 +57,6 @@ void removePollTarget(std::vector<PollTarget>& targets){
         else{
             if(choice > 0 && choice <= static_cast<int>(targets.size()))
                 targets.erase(targets.begin() + choice - 1);
-            break;
         }
     }
 }

@@ -2,22 +2,58 @@
 #include <vector>
 #include "PollTarget.h"
 #include "Menu.h"
+#include <nlohmann/json.hpp>
+#include "jsonSerializer.h"
+
+using json = nlohmann::json;
 
 std::vector<PollTarget> targets;
+json json_targets;
 
 int main(){
 
     {
-    PollTarget target;
+        PollTarget target;
 
-    target.description = "mikrotik home";
-    target.enabled = 1;
-    target.interface = "wg0-mikrotik";
-    target.url = "http://192.168.0.1/awg/api/api.html";
-    target.interval_ms = 1000;
+        target.description = "mikrotik home";
+        target.enabled = 1;
+        target.interface = "wg0-mikrotik";
+        target.url = "http://192.168.0.1/awg/api/api.html";
+        target.interval_ms = 1000;
 
-    targets.push_back(target);
+        json_targets["endpoints"].push_back(pollTargetToJson(target));
+
+        targets.push_back(target);
+
+        target.description = "mikrotik 3AP";
+        target.enabled = 1;
+        target.interface = "wg0-3AP";
+        target.url = "http://192.168.0.1/awg/api/api.html";
+        target.interval_ms = 900;
+
+        json_targets["endpoints"].push_back(pollTargetToJson(target));
+
+        targets.push_back(target);
+
+        std::cout << json_targets.dump(4) << '\n';
     }
+
+ /*   {
+        json j;
+
+        json endpoint;
+
+        endpoint["description"] = "mikrotik json";
+        endpoint["enabled"] = true;
+        endpoint["interface"] = "wg510";
+        endpoint["url"] = "http://www.wp.pl";
+        endpoint["interval_ms"] = 1000;
+
+        j["endpoints"].push_back(endpoint);
+
+        std::cout << j.dump(4) << '\n';
+
+    }*/
 
     while(1){
 

@@ -9,10 +9,15 @@ add_executable(CollectorConfigEditor
     ./src/main.cpp
     ./src/Menu.cpp
     ./src/PollTarget.cpp
+    ./src/jsonSerializer.cpp
 )
 
 target_compile_options(CollectorConfigEditor PRIVATE
     -Wall
     -Wextra
     -Wpedantic
+)
+
+target_include_directories(CollectorConfigEditor PRIVATE
+    third_party
 )
