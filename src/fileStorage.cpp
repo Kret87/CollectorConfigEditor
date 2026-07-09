@@ -6,8 +6,10 @@ bool saveConfiguration(const std::string& filename, const std::vector<PollTarget
 
     std::ofstream file(filename);
 
-    if(!file) 
+    if(!file){
         return false;
+    } 
+        
 
     file << pollTargetsToConfig(targets);
 

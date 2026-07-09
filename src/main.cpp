@@ -8,17 +8,15 @@ int main(){
 
     std::vector<PollTarget> targets;
 
-    if(!loadConfiguration("config.json", targets)){
-        PollTarget target;
-
-        target.description = "example";
-        target.enabled = true;
-        target.interface = "wg0-mikrotik";
-        target.url = "http://192.168.0.1/awg/api/api.html";
-        target.interval_ms = 1000;
-
-        targets.push_back(target);
-    }
+    try{
+       if(!loadConfiguration("config.json", targets)){
+           std::cout << "* Could not open a file. Starting with empty configuration. *\n\n";
+       }
+    }catch(const std::runtime_error& e){
+        std::cout << e.what() << '\n';
+        std::cout << "Starting with an empty configuration.\n";
+        std::cout << "Saving will overwrite the existing file.\n";
+    }   
 
     while(true){
 

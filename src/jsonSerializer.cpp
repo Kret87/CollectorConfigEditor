@@ -1,4 +1,5 @@
 #include "jsonSerializer.h"
+#include <stdexcept>
 
 json pollTargetToJson(const PollTarget& target){
 
@@ -27,22 +28,31 @@ json pollTargetsToConfig(const std::vector<PollTarget>& targets){
 
 std::vector<PollTarget> configToPollTargets(const json& config){
 
-
         std::vector<PollTarget> targets;
 
-        for(const json& element:config["endpoints"]){
+        if(!config.contains("endpoints"))
+                throw std::runtime_error("Missing 'endpoints' array.");
+
+        if(!config["endpoints"].is_array())
+                throw std::runtime_error("'endpoints' is not an array.");
+
+        for (std::size_t i = 0; i < config["endpoints"].size(); ++i){
 
                 PollTarget target;
 
-                target.description = element["description"];
-                target.enabled = element["enabled"];
-                target.interface = element["interface"];
-                target.url = element["url"];
-                target.interval_ms = element["interval_ms"];
+                try{
+                        target.description = config["endpoints"][i]["description"];
+                        target.enabled = config["endpoints"][i]["enabled"];
+                        target.interface = config["endpoints"][i]["interface"];
+                        target.url = config["endpoints"][i]["url"];
+                        target.interval_ms = config["endpoints"][i]["interval_ms"];
+                }catch(const std::exception& e){
+
+                        throw std::runtime_error("Error while parsing endpoint #" + std::to_string(i + 1) + ": " + e.what());
+                }
 
                 targets.push_back(target);
         }
 
         return targets;
-
 }
