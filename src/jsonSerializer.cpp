@@ -2,25 +2,47 @@
 
 json pollTargetToJson(const PollTarget& target){
 
-        json endpoint;
+        json json_target;
 
-        endpoint["description"] = target.description;
-        endpoint["enabled"] = target.enabled;
-        endpoint["interface"] = target.interface;
-        endpoint["url"] = target.url;
-        endpoint["interval_ms"] = target.interval_ms;
+        json_target["description"] = target.description;
+        json_target["enabled"] = target.enabled;
+        json_target["interface"] = target.interface;
+        json_target["url"] = target.url;
+        json_target["interval_ms"] = target.interval_ms;
 
-        return endpoint;
+        return json_target;
 
 }
 
-json pollEndpointsToConfig(const std::vector<PollTarget>& targets){
+json pollTargetsToConfig(const std::vector<PollTarget>& targets){
 
-        json json_endpoints;
+        json json_targets;
 
         for(const PollTarget& target:targets){
-                json_endpoints["endpoints"].push_back(pollTargetToJson(target));
+                json_targets["endpoints"].push_back(pollTargetToJson(target));
         }
 
-        return json_endpoints;
+        return json_targets;
+}
+
+std::vector<PollTarget> configToPollTargets(const json& config){
+
+
+        std::vector<PollTarget> targets;
+
+        for(const json& element:config["endpoints"]){
+
+                PollTarget target;
+
+                target.description = element["description"];
+                target.enabled = element["enabled"];
+                target.interface = element["interface"];
+                target.url = element["url"];
+                target.interval_ms = element["interval_ms"];
+
+                targets.push_back(target);
+        }
+
+        return targets;
+
 }

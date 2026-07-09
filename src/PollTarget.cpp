@@ -9,11 +9,7 @@ void showPollTarget(const PollTarget& target){
            << target.url << " | Interval: " << target.interval_ms << "\n";
 }
 
-void showTargetList(const std::vector<PollTarget>& targets){
-    /*
-    for(const PollTarget& target:targets){
-        showPollTarget(target);
-    }*/
+void showPollTargetsList(const std::vector<PollTarget>& targets){
     std::cout << "List Entries \n\n";
 
     for(std::size_t i = 0; i < targets.size(); i++){
@@ -49,14 +45,14 @@ void removePollTarget(std::vector<PollTarget>& targets){
             return;
         }
     
-        showTargetList(targets);
+        showPollTargetsList(targets);
 
         int choice = readInt("\nRemove (0 = back): ");
 
-        if(!choice) return;
-        else{
-            if(choice > 0 && choice <= static_cast<int>(targets.size()))
-                targets.erase(targets.begin() + choice - 1);
-        }
+        if(!choice) 
+            return;
+        
+        if(choice > 0 && choice <= static_cast<int>(targets.size()))
+            targets.erase(targets.begin() + choice - 1);
     }
 }

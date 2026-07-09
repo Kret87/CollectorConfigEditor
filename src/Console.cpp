@@ -20,8 +20,10 @@ int readInt(const std::string& prompt){
 
         if(std::cin >> value){
             int test_char = std::cin.peek();
-            if(test_char == '\n') return value;
-            else std::cout << "Please enter a valid integer.\n";
+            if(test_char == '\n') 
+                return value;
+
+            std::cout << "Please enter a valid integer.\n";
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }else{
@@ -43,7 +45,7 @@ bool readYesNo(const std::string& prompt){
 
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         
-        if(answer == 'n' or answer == 'N')
+        if(answer == 'n' || answer == 'N')
             return false;
         else if (answer == 'y' || answer == 'Y')
             return true;

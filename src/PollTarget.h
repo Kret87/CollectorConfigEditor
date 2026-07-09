@@ -14,7 +14,7 @@ struct PollTarget
 
 void showPollTarget(const PollTarget& target);
 
-void showTargetList(const std::vector<PollTarget>& targets);
+void showPollTargetsList(const std::vector<PollTarget>& targets);
 
 PollTarget createPollTarget();
 

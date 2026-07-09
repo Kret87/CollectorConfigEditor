@@ -6,9 +6,25 @@ bool saveConfiguration(const std::string& filename, const std::vector<PollTarget
 
     std::ofstream file(filename);
 
-    if(!file) return false;
+    if(!file) 
+        return false;
 
-    file << pollEndpointsToConfig(targets);
+    file << pollTargetsToConfig(targets);
 
+    return true;
+}
+
+bool loadConfiguration(const std::string& filename, std::vector<PollTarget>& targets){
+
+    std::ifstream file(filename);
+
+    if(!file)
+        return false;
+
+    json config;
+
+    file >> config;
+    targets = configToPollTargets(config);
+        
     return true;
 }
