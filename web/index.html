@@ -12,55 +12,90 @@
 
 <h2>Endpoints</h2>
 
-<div id="endpointList">
-    Brak endpointów.
-</div>
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+            <th width="180">Opis</th>
+            <th width="350">URL</th>
+            <th width="130">Interfejs</th>
+            <th width="100">Interwał</th>
+            <th width="90">Stan</th>
+            <th width="70">Akcja</th>
+        </tr>
+    </thead>
+
+    <tbody id="endpointList">
+        <tr>
+            <td colspan="6">Brak endpointów.</td>
+        </tr>
+    </tbody>
+</table>
 
 <h2>Dodaj endpoint</h2>
 
-<p>
-    <label>
-        Opis:
-        <input id="descriptionInput" type="text">
-    </label>
-</p>
+<table cellpadding="3">
+    <tr>
+        <td>
+            <label for="descriptionInput">Opis:</label>
+        </td>
+        <td>
+            <input id="descriptionInput" type="text">
+        </td>
+    </tr>
 
-<p>
-    <label>
-        IP:
-        <input
-            id="ipInput"
-            type="text"
-            placeholder="192.168.0.1">
-    </label>
-</p>
+    <tr>
+        <td>
+            <label for="ipInput">IP:</label>
+        </td>
+        <td>
+            <input
+                id="ipInput"
+                type="text"
+                placeholder="192.168.0.1">
+        </td>
+    </tr>
 
-<p>
-    <label>
-        Interfejs:
-        <input id="interfaceInput" type="text">
-    </label>
-</p>
+    <tr>
+        <td>
+            <label for="interfaceInput">Interfejs:</label>
+        </td>
+        <td>
+            <input id="interfaceInput" type="text">
+        </td>
+    </tr>
 
-<p>
-    <label>
-        Interwał [ms]:
-        <input
-            id="intervalInput"
-            type="number"
-            value="1000"
-            min="1">
-    </label>
-</p>
+    <tr>
+        <td>
+            <label for="intervalInput">Interwał [ms]:</label>
+        </td>
+        <td>
+            <input
+                id="intervalInput"
+                type="number"
+                value="1000"
+                min="1">
+        </td>
+    </tr>
 
-<p>
-    <label>
-        <input id="enabledInput" type="checkbox" checked>
-        Włączony
-    </label>
-</p>
+    <tr>
+        <td>
+            <label for="enabledInput">Włączony:</label>
+        </td>
+        <td>
+            <input
+                id="enabledInput"
+                type="checkbox"
+                checked>
+        </td>
+    </tr>
 
-<button id="addButton">Dodaj endpoint</button>
+    <tr>
+        <td></td>
+        <td>
+            <button id="addButton">Dodaj endpoint</button>
+        </td>
+    </tr>
+</table>
 
 <hr>
 

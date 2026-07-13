@@ -7,38 +7,37 @@ function displayEndpoints()
 
     if (currentConfig === null || currentConfig.endpoints.length === 0)
     {
-        endpointList.textContent = "Brak endpointów.";
+        const row = endpointList.insertRow();
+        const cell = row.insertCell();
+
+        cell.colSpan = 6;
+        cell.textContent = "Brak endpointów.";
+
         return;
     }
 
     currentConfig.endpoints.forEach((endpoint, index) =>
     {
-        const item = document.createElement("div");
-        const text = document.createElement("span");
+        const row = endpointList.insertRow();
+
+        row.insertCell().textContent = endpoint.description;
+        row.insertCell().textContent = endpoint.url;
+        row.insertCell().textContent = endpoint.interface;
+        row.insertCell().textContent = endpoint.interval_ms + " ms";
+        row.insertCell().textContent =
+            endpoint.enabled ? "Włączony" : "Wyłączony";
+
+        const actionCell = row.insertCell();
         const deleteButton = document.createElement("button");
 
-        text.textContent =
-            endpoint.description +
-            " | " +
-            endpoint.url +
-            " | interfejs: " +
-            endpoint.interface +
-            " | interwał: " +
-            endpoint.interval_ms +
-            " ms | " +
-            (endpoint.enabled ? "włączony" : "wyłączony");
-
         deleteButton.textContent = "Usuń";
-        deleteButton.style.marginLeft = "10px";
 
         deleteButton.addEventListener("click", () =>
         {
             removeEndpoint(index);
         });
 
-        item.appendChild(text);
-        item.appendChild(deleteButton);
-        endpointList.appendChild(item);
+        actionCell.appendChild(deleteButton);
     });
 }
 
