@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iterator>
 #include <iostream>
+#include "jsonSerializer.h"
 
 void HttpServer::run(int port){
     
@@ -14,21 +15,38 @@ void HttpServer::run(int port){
         std::cout << "Received configuration:\n";
         std::cout << req.body << '\n';
 
-        std::ofstream file("config.json");
+        json config;
 
-        if(!file){
-            res.set_content(
-            R"({"status":"failed"})",
-            "application/json");
-            res.status = 500;
+        try{
+            config = json::parse(req.body);
+            configToPollTargets(config);
+        }catch(const std::exception& e){
+            res.status = 400;
+
+            json response;
+            response["status"] = "failed";
+            response["message"] = e.what();
+
+            res.set_content(response.dump(), "application/json");
             return;
         }
+            
+            std::ofstream file("config.json");
 
-        file << req.body;
+            if(!file){
+                res.set_content(
+                R"({"status":"failed"})",
+                "application/json");
+                res.status = 500;
+                return;
+            }
 
-        res.set_content(
-            R"({"status":"saved"})",
-            "application/json");
+            file << config.dump(4);
+
+            res.set_content(
+                R"({"status":"saved"})",
+                "application/json");
+
     });
 
     server_.listen("localhost", port);
