@@ -11,6 +11,7 @@ add_executable(CollectorConfigEditor
     ./src/PollTarget.cpp
     ./src/jsonSerializer.cpp
     ./src/fileStorage.cpp
+    ./src/HttpServer.cpp
 )
 
 target_compile_options(CollectorConfigEditor PRIVATE
