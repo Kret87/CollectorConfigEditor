@@ -1,17 +1,35 @@
 #include "HttpServer.h"
 #include <fstream>
 #include <iterator>
+#include <iostream>
 
 void HttpServer::run(int port){
     
-    std::string html = readFile("../web/index.html");
-    std::string js = readFile("../web/app.js");
+    serveStaticFile("/","../web/index.html","text/html");
+    serveStaticFile("/app.js","../web/app.js","application/javascript");
+    serveStaticFile("/api/config","config.json","application/json");
 
-    std::string json = readFile("config.json");
+    server_.Post("/api/config",[](const httplib::Request& req, httplib::Response& res)
+    {
+        std::cout << "Received configuration:\n";
+        std::cout << req.body << '\n';
 
-    serveStaticFile("/",html,"text/html");
-    serveStaticFile("/app.js",js,"application/javascript");
-    serveStaticFile("/api/config",json,"application/json");
+        std::ofstream file("config.json");
+
+        if(!file){
+            res.set_content(
+            R"({"status":"failed"})",
+            "application/json");
+            res.status = 500;
+            return;
+        }
+
+        file << req.body;
+
+        res.set_content(
+            R"({"status":"saved"})",
+            "application/json");
+    });
 
     server_.listen("localhost", port);
 }
@@ -27,10 +45,13 @@ std::string HttpServer::readFile(const std::string& path){
     return text;
 }
 
-void HttpServer::serveStaticFile(const std::string& path, const std::string& content, const std::string& content_type){
-        server_.Get(path, [content,content_type](const httplib::Request& req,
+void HttpServer::serveStaticFile(const std::string& path, const std::string& filepath, const std::string& content_type){
+
+        server_.Get(path, [this,filepath,content_type](const httplib::Request& req,
                        httplib::Response& res)
     {
+        std::string content = readFile(filepath);
+        res.set_header("Cache-Control", "no-store");
         res.set_content(content,content_type);
     });
 
