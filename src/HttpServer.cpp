@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iterator>
 #include <iostream>
+#include <stdexcept>
 #include "jsonSerializer.h"
 
 void HttpServer::run(int port){
@@ -65,7 +66,7 @@ std::string HttpServer::readFile(const std::string& path){
 
 void HttpServer::serveStaticFile(const std::string& path, const std::string& filepath, const std::string& content_type){
 
-        server_.Get(path, [this,filepath,content_type](const httplib::Request& req,
+        server_.Get(path, [this,filepath,content_type](const httplib::Request&,
                        httplib::Response& res)
     {
         std::string content = readFile(filepath);

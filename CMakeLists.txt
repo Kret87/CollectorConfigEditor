@@ -12,6 +12,7 @@ add_executable(CollectorConfigEditor
     ./src/jsonSerializer.cpp
     ./src/fileStorage.cpp
     ./src/HttpServer.cpp
+    ./src/NetworkManager.cpp
 )
 
 target_compile_options(CollectorConfigEditor PRIVATE

@@ -3,13 +3,23 @@
 #include "PollTarget.h"
 #include "Menu.h"
 #include "fileStorage.h"
+#include "HttpServer.h"
+#include "NetworkManager.h"
 
 int main(){
 
+    NetworkManager networkManager;
+    networkManager.getInterfaces();
+
+    return true;
+
+    HttpServer server;
+    server.run();
+    
     std::vector<PollTarget> targets;
 
     try{
-       if(!loadConfiguration("config.json", targets)){
+       if(!loadConfiguration("collector.json", targets)){
            std::cout << "* Could not open a file. Starting with empty configuration. *\n\n";
        }
     }catch(const std::runtime_error& e){
@@ -35,7 +45,7 @@ int main(){
             removePollTarget(targets);
             break;
         case 4:
-            if(saveConfiguration("config.json", targets))
+            if(saveConfiguration("collector.json", targets))
                 std::cout << "Configuration saved.";
             else 
                 std::cout << "Configuration could not be saved.\n\n";

@@ -1,14 +1,8 @@
 #include "Menu.h"
 #include <iostream>
 #include <limits>
-#include "HttpServer.h"
 
 int showMenu(){
-
-    HttpServer server;
-    server.run();
-
-    return true;
 
     std::cout << "Collector Config Editor\n\n";
     std::cout << "1. List entries\n";
